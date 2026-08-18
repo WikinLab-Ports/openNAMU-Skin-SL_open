@@ -2,12 +2,12 @@
 <html>
     <head>
         <meta charset="utf-8">
-        {% if imp[3][0] != 0 %}
-            <title>{{imp[0]}} {{imp[3][0]}} - {{imp[1][0]}}</title>
+        {% if sub_title != 0 %}
+            <title>{{title}} {{sub_title}} - {{wiki_name}}</title>
         {% else %}
-            <title>{{imp[0]}} - {{imp[1][0]}}</title>
+            <title>{{title}} - {{wiki_name}}</title>
         {% endif %}
-        {{imp[3][3]|safe}}
+        {{main_head|safe}}
         <style>
             @media (max-width: 800px) { table { min-width: 100%; } }
             @media (min-width: 800px) { body { width: 80%; margin: auto; padding: 10px; border: 1px solid; } }
@@ -18,22 +18,22 @@
         </style>
         <script src="/views/sl_open/js/skin_set.js?ver=3"></script>
         <script>window.addEventListener('DOMContentLoaded', skin_set);</script>
-        {{imp[1][5]|safe}}
-        {{imp[2][3]|safe}}
-        {% if imp[3][0] != 0 %}
-            <meta name="title" content="{{imp[0]}}{{imp[3][0]}} - {{imp[1][0]}}">
+        {{global_head|safe}}
+        {{user_head|safe}}
+        {% if sub_title != 0 %}
+            <meta name="title" content="{{title}}{{sub_title}} - {{wiki_name}}">
         {% else %}
-            <meta name="title" content="{{imp[0]}} - {{imp[1][0]}}">
+            <meta name="title" content="{{title}} - {{wiki_name}}">
         {% endif %}
-        <meta name="keywords" content="{{imp[0]}}">
-        {% if imp[2][12] != 0 and imp[2][12] == 'w' %}
+        <meta name="keywords" content="{{title}}">
+        {% if (user_path == '/w' or user_path|slice:'0:3' == '/w/') %}
             <meta name="description" content="{{data|cut_100}}">
         {% endif %}
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
         <div id="top_tool">
-            <a href="/">{{imp[1][4]|safe}}</a>
+            <a href="/">{{wiki_logo|safe}}</a>
             ·
             <a href="/recent_changes">{{'recent_change'|load_lang}}</a>
             ·
@@ -41,13 +41,13 @@
             ·
             <a href="/random">{{'random'|load_lang}}</a>
             ·
-            {% if imp[2][2] == 0 %}
+            {% if user_login == 0 %}
                 <a href="/user">{{'login'|load_lang}}</a>
-            {% elif imp[2][2] == 1 %}
-                {% if imp[2][8] != '0' %}
-                    <a href="/user">{{imp[2][5]}} (A)</a>
+            {% elif user_login == 1 %}
+                {% if user_alarm_count != '0' %}
+                    <a href="/user">{{user_name}} (A)</a>
                 {% else %}
-                    <a href="/user">{{imp[2][5]}}</a>
+                    <a href="/user">{{user_name}}</a>
                 {% endif %}
             {% endif %}
             ·
@@ -68,7 +68,7 @@
                     {% else %}
                         <a href="/{{sub_d[0]}}">{{sub_d[1]}}</a>
                     {% endif %}
-                    {% if menu[loop.index] %}
+                    {% if menu[forloop.Counter] %}
                         ·
                     {% endif %}
                 {% endfor %}
@@ -77,15 +77,15 @@
         </div>
         <div id="data">
             <h1 id="title">
-                {{imp[0]}}
-                {% if imp[3][0] != 0 %}
-                    <sub>{{imp[3][0]}}</sub>
+                {{title}}
+                {% if sub_title != 0 %}
+                    <sub>{{sub_title}}</sub>
                 {% endif %}
             </h1>
             <hr>
             {{data|safe}}
             <hr id="last">
-            <p>{{imp[1][1]|safe}}</p>
+            <p>{{license|safe}}</p>
             <div id="powered">
                 <a href="https://github.com/2DU/openNAMU">openNAMU</a>
             </div>
